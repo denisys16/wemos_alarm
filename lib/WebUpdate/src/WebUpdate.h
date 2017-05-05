@@ -6,7 +6,7 @@
 #include <ESP8266mDNS.h>
 #include <ESP8266HTTPUpdateServer.h>
 
-extern void webupdate_connect();
+extern void setup_webupdate();
 extern void loop_webupdate();
 
 #endif //_WEBUPDATE_H_

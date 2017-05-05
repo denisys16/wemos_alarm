@@ -18,14 +18,22 @@ void led_off()
 void led_blink()
 {
   static long currTime = millis();
-  static bool blinkState = false;
-  if ((millis() - currTime) > 500)
+  static bool blinkState = true;
+  static long next_delay = 100;
+  if ((millis() - currTime) > next_delay)
   {
-    blinkState = !blinkState;
+
     if (blinkState)
+    {
+      next_delay = 80;
       led_on();
+    }
     else
+    {
+      next_delay = 3000;
       led_off();
+    }
+    blinkState = !blinkState;
     currTime = millis();
   }
 }
@@ -63,23 +71,33 @@ void wifi_connect()
 
 void setup()
 {
-    setup_serial();
-    setup_led();
+  rst_info *resetInfo;
+  resetInfo = ESP.getResetInfoPtr();
+
+  setup_serial();
+
+  Serial.println(ESP.getResetReason());
+  Serial.println("---");
+
+  setup_led();
+  wifi_connect();
+  setup_webupdate();
 }
 
 void loop()
 {
-  if (WiFi.status() != WL_CONNECTED)
-  {
-    led_off();
-    wifi_connect();
-    delay(1000);
-    webupdate_connect();
-  }
-
   if (WiFi.status() == WL_CONNECTED)
   {
     led_blink();
+    yield();
     loop_webupdate();
+    yield();
+  }
+  else
+  {
+    led_off();
+    Serial.println("WiFi Connect Failed! Rebooting...");
+    delay(1000);
+    ESP.restart();
   }
 }

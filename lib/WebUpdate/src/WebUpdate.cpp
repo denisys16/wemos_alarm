@@ -7,7 +7,7 @@
 ESP8266WebServer httpServer(80);
 ESP8266HTTPUpdateServer httpUpdater;
 
-void webupdate_connect()
+void setup_webupdate()
 {
     httpUpdater.setup(&httpServer);
     httpServer.begin();
