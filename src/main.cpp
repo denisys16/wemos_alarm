@@ -2,6 +2,7 @@
 #include <WebUpdate.h>
 #include <LEDStrip.h>
 #include <MQTTClient.h>
+#include <SyncTime.h>
 
 #include "passwd.h"
 //const char* ssid = "SSID_NAME";
@@ -71,6 +72,8 @@ void wifi_connect()
   Serial.println("WiFi connected");
 }
 
+
+
 void setup()
 {
   rst_info *resetInfo;
@@ -86,6 +89,8 @@ void setup()
   wifi_connect();
   setup_webupdate();
   setup_mqttclient();
+  setup_synctime();
+
 }
 
 void loop()
@@ -96,6 +101,7 @@ void loop()
     loop_webupdate();   yield();
     loop_mqttclient();  yield();
     loop_ledstrip();    yield();
+    loop_synctime();    yield();
   }
   else
   {

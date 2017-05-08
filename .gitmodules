@@ -1,0 +1,9 @@
+[submodule "lib/pubsubclient"]
+	path = lib/pubsubclient
+	url = https://github.com/knolleary/pubsubclient.git
+[submodule "lib/NtpClient"]
+	path = lib/NtpClient
+	url = https://github.com/gmag11/NtpClient.git
+[submodule "lib/Time"]
+	path = lib/Time
+	url = https://github.com/PaulStoffregen/Time.git
