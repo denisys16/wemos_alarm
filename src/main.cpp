@@ -1,5 +1,7 @@
 #include <ESP8266WiFi.h>
 #include <WebUpdate.h>
+#include <LEDStrip.h>
+#include <MQTTClient.h>
 
 #include "passwd.h"
 //const char* ssid = "SSID_NAME";
@@ -80,18 +82,20 @@ void setup()
   Serial.println("---");
 
   setup_led();
+  setup_ledstrip();
   wifi_connect();
   setup_webupdate();
+  setup_mqttclient();
 }
 
 void loop()
 {
   if (WiFi.status() == WL_CONNECTED)
   {
-    led_blink();
-    yield();
-    loop_webupdate();
-    yield();
+    led_blink();        yield();
+    loop_webupdate();   yield();
+    loop_mqttclient();  yield();
+    loop_ledstrip();    yield();
   }
   else
   {
