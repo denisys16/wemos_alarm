@@ -9,8 +9,7 @@ static void processSyncEvent(NTPSyncEvent_t ntpEvent) {
             Serial.println("Invalid NTP server address");
     }
     else {
-        Serial.print("Got NTP time: ");
-        Serial.println(NTP.getTimeDateString(NTP.getLastNTPSync()));
+        mdebug_printf(MLVL_INFO, "Got NTP time: %s.", NTP.getTimeDateString(NTP.getLastNTPSync()).c_str());
     }
 }
 
@@ -28,7 +27,6 @@ void setup_synctime()
 
 void loop_synctime()
 {
-    static int i = 0;
     static int last = 0;
 
     if (syncEventTriggered)
@@ -37,18 +35,13 @@ void loop_synctime()
         syncEventTriggered = false;
     }
 
-    if ((millis() - last) > 5100)
+    if ((millis() - last) > 30000) // Every 30 seconds
     {
         last = millis();
-        Serial.print(i); Serial.print(" ");
-        Serial.print(NTP.getTimeDateString()); Serial.print(" ");
-        Serial.print(NTP.isSummerTime() ? "Summer Time. " : "Winter Time. ");
-        Serial.print("WiFi is ");
-        Serial.print(WiFi.isConnected() ? "connected" : "not connected"); Serial.print(". ");
-        Serial.print("Uptime: ");
-        Serial.print(NTP.getUptimeString()); Serial.print(" since ");
-        Serial.println(NTP.getTimeDateString(NTP.getFirstSync()).c_str());
-
-        i++;
+        mdebug_printf(MLVL_VERBOSE, "SyncTime: %s - %s. Uptime: %s since %s.\n",
+            NTP.getTimeDateString().c_str(),
+            NTP.isSummerTime() ? "Summer Time" : "Winter Time",
+            NTP.getUptimeString().c_str(),
+            NTP.getTimeDateString(NTP.getFirstSync()).c_str());
     }
 }

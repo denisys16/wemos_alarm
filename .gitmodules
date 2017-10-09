@@ -7,3 +7,9 @@
 [submodule "lib/Time"]
 	path = lib/Time
 	url = https://github.com/PaulStoffregen/Time.git
+[submodule "lib/RemoteDebug"]
+	path = lib/RemoteDebug
+	url = https://github.com/JoaoLopesF/ESP8266-RemoteDebug-Telnet.git
+[submodule "lib/Adafruit_NeoPixel"]
+	path = lib/Adafruit_NeoPixel
+	url = https://github.com/adafruit/Adafruit_NeoPixel.git

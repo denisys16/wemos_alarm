@@ -1,7 +1,8 @@
 #include <MQTTClient.h>
+#include <LEDStrip.h>
 
 const char* mqtt_client_name = "ESP8266WemosN1";
-const char* topic_set_color = "wemos/LEDstrip/color";
+const char* topic_set_color = "wemos/rgb_color";
 const char* topic_start_alarm = "alarm/start";
 
 static WiFiClient wclient;
@@ -45,31 +46,27 @@ static void set_color(char *payload)
     int green = payload_str.substring(c1+1,c2).toInt();
     int blue = payload_str.substring(c2+1).toInt();
 
-    //setLEDStripColor(pixels.Color(gamma8[red], gamma8[green], gamma8[blue]));
+    ledstrip_set_color(red, green, blue);
 
-    Serial.print(red); Serial.print(",");
-    Serial.print(green); Serial.print(",");
-    Serial.println(blue);
+    mdebug_printf(MLVL_DEBUG,"Set LED color to R:%u G:%u B:%u\n", red, green, blue);
 }
 
 static void start_alarm(char *payload)
 {
-    Serial.println("LEDStrip set alarm called.");
+    mdebug_printf(MLVL_DEBUG,"LEDStrip set alarm called.\n");
+    ledstrip_start_alarm();
 }
 
 static void mqtt_callback(char* topic, byte* payload, unsigned int length) {
-    Serial.print(topic);
-    Serial.print(" => ");
-
     // Allocate the correct amount of memory for the payload copy
     byte* p = (byte*)malloc(length+1); // Add more space for convert to zero-terminated strings
     // Copy the payload to the new buffer
     memcpy(p,payload,length);
     p[length] = 0; // For zero-terminated strings
-    Serial.write(p, length);
-    Serial.println();
 
-    if (String(topic) == topic_start_alarm)
+    mdebug_printf(MLVL_INFO,"MQTT: %s => %s\n", topic, p);
+
+    if (String(topic) == topic_set_color)
         set_color((char *)p);
     else if (String(topic) == topic_start_alarm)
         start_alarm((char *)p);

@@ -3,6 +3,8 @@
 #include <LEDStrip.h>
 #include <MQTTClient.h>
 #include <SyncTime.h>
+#include <MDebug.h>
+#include <LEDStrip.h>
 
 #include "passwd.h"
 //const char* ssid = "SSID_NAME";
@@ -72,14 +74,13 @@ void wifi_connect()
   Serial.println("WiFi connected");
 }
 
-
-
 void setup()
 {
   rst_info *resetInfo;
   resetInfo = ESP.getResetInfoPtr();
 
   setup_serial();
+  setup_mdebug();
 
   Serial.println(ESP.getResetReason());
   Serial.println("---");
@@ -90,11 +91,12 @@ void setup()
   setup_webupdate();
   setup_mqttclient();
   setup_synctime();
-
 }
 
+uint32_t mTimeSeconds = 0;
 void loop()
 {
+  loop_mdebug();
   if (WiFi.status() == WL_CONNECTED)
   {
     led_blink();        yield();

@@ -4,6 +4,7 @@
 #include <ESP8266WiFi.h>
 #include <TimeLib.h>
 #include <NtpClientLib.h>
+#include <MDebug.h>
 
 extern void setup_synctime();
 extern void loop_synctime();

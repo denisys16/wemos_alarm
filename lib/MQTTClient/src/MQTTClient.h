@@ -3,6 +3,7 @@
 
 #include <ESP8266WiFi.h>
 #include <PubSubClient.h>
+#include <MDebug.h>
 
 extern void setup_mqttclient();
 extern void loop_mqttclient();
