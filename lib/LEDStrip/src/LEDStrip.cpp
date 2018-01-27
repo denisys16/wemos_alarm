@@ -53,6 +53,7 @@ static void setColor(uint32_t dly, uint8_t r, uint8_t g, uint8_t b)
         pixels.setPixelColor(i, g_r, g_g, g_b);
         pixels.show();
         delay(dly);
+        yield();
     }
 }
 
@@ -86,7 +87,7 @@ static void on_alarm()
             {alarm_g++;alarm_b++;}
         else if (alarm_b < 255)
             alarm_b++;
-        setColor(1,alarm_r,alarm_g,alarm_b);
+        setColor(0,alarm_r,alarm_g,alarm_b);
     }
     else
     {
@@ -97,7 +98,7 @@ static void on_alarm()
 
 static void on_color()
 {
-    setColor(1,color_r,color_g,color_b);
+    setColor(0,color_r,color_g,color_b);
     to_idle();
 }
 
@@ -126,7 +127,7 @@ void ledstrip_set_color(uint8_t r, uint8_t g, uint8_t b)
 void setup_ledstrip()
 {
     pixels.begin();
-    setColor(1,255,255,255);
+    setColor(0,255,255,255);
     next_mode = lsmPOWERON;
 }
 
