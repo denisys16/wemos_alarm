@@ -84,19 +84,20 @@ void wifi_connect()
   DEBUGLOG("WiFi connected");
 }
 
+extern "C" {
+  #include "user_interface.h"
+  extern struct rst_info resetInfo;
+}
+
 void setup()
 {
-  rst_info *resetInfo;
-  resetInfo = ESP.getResetInfoPtr();
-
   setup_serial();
   setup_mdebug();
 
   DEBUGLOG(ESP.getResetReason());
-  DEBUGLOG("---");
 
   setup_led();
-  setup_ledstrip();
+  setup_ledstrip(resetInfo.reason != REASON_EXT_SYS_RST); // Инициализировать только при подаче питания
   wifi_connect();
   setup_webupdate();
   setup_mqttclient();

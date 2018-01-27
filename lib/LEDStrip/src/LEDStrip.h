@@ -5,7 +5,7 @@
 #include <MDebug.h>
 #include <Adafruit_NeoPixel.h>
 
-extern void setup_ledstrip();
+extern void setup_ledstrip(int dont_touch_led);
 extern void loop_ledstrip();
 extern void ledstrip_start_alarm();
 extern void ledstrip_set_color(uint8_t r, uint8_t g, uint8_t b);
