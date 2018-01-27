@@ -36,7 +36,6 @@ void loop_mqttclient()
 
 static void set_color(char *payload)
 {
-    Serial.println("LEDStrip set color called.");
     String payload_str((char *)payload);
 
     int c1 = payload_str.indexOf(';');

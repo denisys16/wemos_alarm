@@ -2,5 +2,9 @@
     "files.associations": {
         "array": "cpp",
         "initializer_list": "cpp"
+    },
+    "terminal.integrated.env.windows": {
+        "PATH": "C:\\Users\\denis\\.platformio\\penv\\Scripts;C:\\Users\\denis\\.platformio\\penv;C:\\ProgramData\\Oracle\\Java\\javapath;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files\\Git\\cmd;C:\\Program Files\\TortoiseGit\\bin;C:\\Users\\denis\\AppData\\Local\\Microsoft\\WindowsApps;;C:\\ProgramData\\Oracle\\Java\\javapath;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files\\Git\\cmd;C:\\Program Files\\TortoiseGit\\bin;C:\\Users\\denis\\AppData\\Local\\Microsoft\\WindowsApps;",
+        "PLATFORMIO_CALLER": "vscode"
     }
 }

@@ -6,6 +6,14 @@
 #include <MDebug.h>
 #include <LEDStrip.h>
 
+#define DEBUG_LOG_ENABLED 0
+
+#if (DEBUG_LOG_ENABLED)
+  #define DEBUGLOG(...) Serial.printf(__VA_ARGS__)
+#else
+  #define DEBUGLOG(...)
+#endif
+
 #include "passwd.h"
 //const char* ssid = "SSID_NAME";
 //const char* password = "PASSWORD";
@@ -52,26 +60,28 @@ void setup_led()
 
 void setup_serial()
 {
-  // Setup console
-  Serial.begin(115200);
-  delay(10);
-  Serial.println();
-  Serial.println();
+  #if (DEBUG_LOG_ENABLED)
+    // Setup console
+    Serial.begin(115200);
+    delay(10);
+    Serial.println();
+    Serial.println();
+  #endif
 }
 
 void wifi_connect()
 {
-  Serial.print("Connecting to ");
-  Serial.print(ssid);
-  Serial.println("...");
+  DEBUGLOG("Connecting to ");
+  DEBUGLOG(ssid);
+  DEBUGLOG("...");
   WiFi.begin(ssid, password);
   if (WiFi.waitForConnectResult() != WL_CONNECTED)
   {
-    Serial.println("WiFi Connect Failed! Rebooting...");
+    DEBUGLOG("WiFi Connect Failed! Rebooting...");
     delay(1000);
     ESP.restart();
   }
-  Serial.println("WiFi connected");
+  DEBUGLOG("WiFi connected");
 }
 
 void setup()
@@ -82,15 +92,15 @@ void setup()
   setup_serial();
   setup_mdebug();
 
-  Serial.println(ESP.getResetReason());
-  Serial.println("---");
+  DEBUGLOG(ESP.getResetReason());
+  DEBUGLOG("---");
 
   setup_led();
   setup_ledstrip();
   wifi_connect();
   setup_webupdate();
   setup_mqttclient();
-  setup_synctime();
+  //setup_synctime();
 }
 
 uint32_t mTimeSeconds = 0;
@@ -99,16 +109,16 @@ void loop()
   loop_mdebug();
   if (WiFi.status() == WL_CONNECTED)
   {
-    led_blink();        yield();
+    //led_blink();        yield();
     loop_webupdate();   yield();
     loop_mqttclient();  yield();
     loop_ledstrip();    yield();
-    loop_synctime();    yield();
+    //loop_synctime();    yield();
   }
   else
   {
     led_off();
-    Serial.println("WiFi Connect Failed! Rebooting...");
+    DEBUGLOG("WiFi Connect Failed! Rebooting...");
     delay(1000);
     ESP.restart();
   }
