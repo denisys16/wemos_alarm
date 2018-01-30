@@ -128,7 +128,7 @@ void setup_ledstrip(int dont_touch_led)
 {
     pixels.begin();
     if (!dont_touch_led)
-        setColor(0,255,255,255);
+        setColor(0,255,225,200);
     next_mode = lsmPOWERON;
 }
 
