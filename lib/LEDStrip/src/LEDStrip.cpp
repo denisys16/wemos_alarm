@@ -2,6 +2,10 @@
 
 #define NUM_PIXELS 60
 
+#define WHITE_R 255
+#define WHITE_G 180
+#define WHITE_B 150
+
 Adafruit_NeoPixel pixels(NUM_PIXELS, D2, NEO_GRB | NEO_KHZ800);
 
 typedef enum {lsmIDLE, lsmPOWERON, lsmALARM, lsmCOLOR} ledstrip_mode;
@@ -87,6 +91,10 @@ static void on_alarm()
             {alarm_g++;alarm_b++;}
         else if (alarm_b < 255)
             alarm_b++;
+        if (alarm_r>WHITE_R) alarm_r = WHITE_R;
+        if (alarm_g>WHITE_G) alarm_g = WHITE_G;
+        if (alarm_b>WHITE_B) alarm_b = WHITE_B;
+
         setColor(0,alarm_r,alarm_g,alarm_b);
     }
     else
@@ -128,7 +136,7 @@ void setup_ledstrip(int dont_touch_led)
 {
     pixels.begin();
     if (!dont_touch_led)
-        setColor(0,255,225,200);
+        setColor(0,WHITE_R,WHITE_G,WHITE_B);
     next_mode = lsmPOWERON;
 }
 
